@@ -1,2 +1,3 @@
-# grafana-dashboards
-Grafana Dashboards
+# Grafana Dashboards
+
+Grafana dashboard store
