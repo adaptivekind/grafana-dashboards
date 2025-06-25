@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "03518a3c-70c7-4021-83c8-18b87d8e9571"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -131,7 +131,7 @@
           "adhocFilters": [],
           "datasource": {
             "type": "prometheus",
-            "uid": "03518a3c-70c7-4021-83c8-18b87d8e9571"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -149,7 +149,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "03518a3c-70c7-4021-83c8-18b87d8e9571"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -233,7 +233,7 @@
           "adhocFilters": [],
           "datasource": {
             "type": "prometheus",
-            "uid": "03518a3c-70c7-4021-83c8-18b87d8e9571"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "system_memory_usage_bytes{}",
@@ -245,7 +245,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "03518a3c-70c7-4021-83c8-18b87d8e9571"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "system_linux_memory_available_bytes{}",
@@ -259,7 +259,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "03518a3c-70c7-4021-83c8-18b87d8e9571"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "system_memory_limit_bytes{}",
@@ -468,6 +468,7 @@
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -567,6 +568,7 @@
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -728,13 +730,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Resources",
   "uid": "fepw8wewup7ggb",
-  "version": 18,
+  "version": 22,
   "weekStart": ""
 }
