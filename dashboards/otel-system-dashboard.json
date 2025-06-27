@@ -165,7 +165,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 30,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -173,13 +173,13 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "smooth",
+            "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "never",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -197,16 +197,47 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
           "unit": "decbytes"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Limit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "used"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 62
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -236,25 +267,11 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "system_memory_usage_bytes{}",
+          "expr": "system_memory_usage_bytes{state=\"used\"}",
           "interval": "${resolution}",
           "legendFormat": "{{state}}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "expr": "system_linux_memory_available_bytes{}",
-          "hide": false,
-          "instant": false,
-          "interval": "${resolution}",
-          "legendFormat": "Available",
-          "range": true,
-          "refId": "B"
         },
         {
           "datasource": {
@@ -309,7 +326,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 6,
         "x": 0,
         "y": 8
       },
@@ -347,8 +364,74 @@
           "refId": "A"
         }
       ],
-      "title": "CPU %",
+      "title": "Pods CPU Usage %",
       "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "shades"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 8
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": true,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "expr": "sum(k8s_pod_cpu_usage{k8s_namespace_name=~\"$k8s_namespace_name\", k8s_pod_name=~\"$k8s_pod_name\"})",
+          "instant": false,
+          "interval": "${resolution}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Pods CPU Usage",
+      "type": "stat"
     },
     {
       "datasource": {
@@ -384,7 +467,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 6,
         "x": 12,
         "y": 8
       },
@@ -421,8 +504,76 @@
           "refId": "A"
         }
       ],
-      "title": "Memory %",
+      "title": "RAM Usage %",
       "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "shades"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 8
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": true,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "expr": "sum(k8s_pod_memory_working_set_bytes{namespace=~\"$k8s_namespace_name\", pod=~\"$k8s_pod_name\"})",
+          "instant": false,
+          "interval": "${resolution}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "RAM Usage",
+      "transparent": true,
+      "type": "stat"
     },
     {
       "datasource": {
@@ -633,7 +784,7 @@
       {
         "current": {
           "text": "prometheus",
-          "value": "03518a3c-70c7-4021-83c8-18b87d8e9571"
+          "value": "8a184732-d476-4e70-9d9f-2b69fbcfb690"
         },
         "name": "datasource",
         "options": [],
@@ -670,8 +821,8 @@
       },
       {
         "current": {
-          "text": "30s",
-          "value": "30s"
+          "text": "1m",
+          "value": "1m"
         },
         "description": "",
         "name": "resolution",
@@ -687,12 +838,12 @@
             "value": "15s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "30s",
             "value": "30s"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "1m",
             "value": "1m"
           },
@@ -705,9 +856,14 @@
             "selected": false,
             "text": "5m",
             "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
           }
         ],
-        "query": "1s, 15s, 30s, 1m, 3m, 5m",
+        "query": "1s, 15s, 30s, 1m, 3m, 5m, 10m",
         "type": "custom"
       },
       {
@@ -735,8 +891,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Resources",
+  "title": "K8s System",
   "uid": "fepw8wewup7ggb",
-  "version": 22,
+  "version": 27,
   "weekStart": ""
 }
