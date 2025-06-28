@@ -778,7 +778,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "8a184732-d476-4e70-9d9f-2b69fbcfb690"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -884,12 +884,29 @@
       "pluginVersion": "11.3.0",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "editorMode": "code",
           "expr": "network_ups_tools_ups_realpower",
           "interval": "",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "expr": "",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B"
         }
       ],
       "title": "Power Usage",
@@ -898,7 +915,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "8a184732-d476-4e70-9d9f-2b69fbcfb690"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -928,7 +945,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "never",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -938,8 +955,8 @@
               "mode": "off"
             }
           },
+          "decimals": 3,
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -948,7 +965,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "currencyGBP"
         },
         "overrides": []
       },
@@ -958,7 +976,8 @@
         "x": 12,
         "y": 28
       },
-      "id": 11,
+      "hideTimeOverride": true,
+      "id": 12,
       "options": {
         "legend": {
           "calcs": [],
@@ -974,14 +993,38 @@
       "pluginVersion": "11.3.0",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "editorMode": "code",
-          "expr": "network_ups_tools_ups_load",
-          "legendFormat": "__auto",
+          "expr": "0.2235 * sum(increase(network_ups_tools_ups_realpower[10m])) / 1000 / 600",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{label_name}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "UPS Load",
+      "timeFrom": "1d",
+      "title": "Running Cost",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Cost",
+            "cumulative": {
+              "field": "Value",
+              "reducer": "sum"
+            },
+            "mode": "cumulativeFunctions",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
       "type": "timeseries"
     }
   ],
@@ -1030,8 +1073,8 @@
       },
       {
         "current": {
-          "text": "30s",
-          "value": "30s"
+          "text": "10m",
+          "value": "10m"
         },
         "description": "",
         "name": "resolution",
@@ -1047,7 +1090,7 @@
             "value": "15s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "30s",
             "value": "30s"
           },
@@ -1067,7 +1110,7 @@
             "value": "5m"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "10m",
             "value": "10m"
           }
@@ -1095,7 +1138,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
