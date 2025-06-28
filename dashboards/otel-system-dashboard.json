@@ -378,6 +378,7 @@
             "mode": "shades"
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -518,6 +519,7 @@
             "mode": "shades"
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1138,13 +1140,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "K8s System",
   "uid": "fepw8wewup7ggb",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
