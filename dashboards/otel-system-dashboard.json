@@ -563,7 +563,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(k8s_pod_memory_working_set_bytes{namespace=~\"$k8s_namespace_name\", pod=~\"$k8s_pod_name\"})",
+          "expr": "sum(k8s_pod_memory_working_set_bytes{k8s_namespace_name=~\"$k8s_namespace_name\", k8s_pod_name=~\"$k8s_pod_name\"})",
           "instant": false,
           "interval": "${resolution}",
           "legendFormat": "__auto",
@@ -821,8 +821,8 @@
       },
       {
         "current": {
-          "text": "1m",
-          "value": "1m"
+          "text": "30s",
+          "value": "30s"
         },
         "description": "",
         "name": "resolution",
@@ -838,12 +838,12 @@
             "value": "15s"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "30s",
             "value": "30s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "1m",
             "value": "1m"
           },
@@ -893,6 +893,6 @@
   "timezone": "browser",
   "title": "K8s System",
   "uid": "fepw8wewup7ggb",
-  "version": 27,
+  "version": 29,
   "weekStart": ""
 }
